@@ -104,8 +104,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
+        $user = User::where('id', $id)->first();
+       
+        if ($user == null) {
+            User::withTrashed()->where('id', $request->id)->forceDelete();
+            return back();
+        }
         User::where('id', $id)->delete();
         return back();
     }

@@ -26,7 +26,9 @@
                         <form action="{{ route('user.destroy', $item->id) }}" method="post">
                             @csrf
                             @method('DELETE')
+                            <input type="hidden" name="id" value="{{ $item->id }}">
                             <button onclick="return confirm('ban co muon xoa khong?')">Delete</button>
+
                         </form>
                         |
                         <a href="{{ route('user.edit', $item->id) }}">edit</a>
