@@ -40,6 +40,11 @@
             @endforeach
         </tbody>
     </table><br>
-    <a href="{{ route('onlyTrashed') }}">Dữ liệu vừa xóa</a>
+    @if ($i == 1)
+        <a href="{{ route('onlyTrashed') }}">Dữ liệu vừa xóa</a>
+    @else
+        <a href="{{ route('user.index') }}">Quay lại</a>
+    @endif
+
     {{ $user->links() }}
 </div>
