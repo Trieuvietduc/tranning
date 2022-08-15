@@ -31,6 +31,9 @@
 
                         </form>
                         |
+                        @if ($i == 0)
+                            <a href="{{ route('restore', $item->id) }}">khôi phục</a>|
+                        @endif
                         <a href="{{ route('user.edit', $item->id) }}">edit</a>
                     </td>
                 </tr>

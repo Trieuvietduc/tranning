@@ -19,10 +19,11 @@ class UserController extends Controller
      */
     public function index()
     {
-
+        $i = 1;
         $user = User::select('*')->Orderby('name', 'DESC')->where('deleted_at', null)->paginate(5);
         return view('users.list', [
-            'user' => $user
+            'user' => $user,
+            'i' => $i
         ]);
     }
 
@@ -107,7 +108,6 @@ class UserController extends Controller
     public function destroy($id, Request $request)
     {
         $user = User::where('id', $id)->first();
-       
         if ($user == null) {
             User::withTrashed()->where('id', $request->id)->forceDelete();
             return back();
@@ -134,6 +134,15 @@ class UserController extends Controller
     public function onlyTrashed()
     {
         $user =  User::onlyTrashed()->paginate(5);
-        return view('users.list', compact('user'));
+        $i = 0;
+        return view('users.list', compact(['user', 'i']));
+    }
+    public function restore(Request $request)
+    {
+        $check = User::where('id', $request->id)->first();
+        if ($check == null) {
+            User::withTrashed()->where('id', $request->id)->restore();
+            return redirect()->route('user.index');
+        }
     }
 }

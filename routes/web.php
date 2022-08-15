@@ -22,3 +22,4 @@ Route::get('/', function () {
 Route::resource('user', UserController::class);
 Route::get('search', [UserController::class, 'search'])->name('search');
 Route::get('onlyTrashed', [UserController::class, 'onlyTrashed'])->name('onlyTrashed');
+Route::get('restore/{id}', [UserController::class, 'restore'])->name('restore');
