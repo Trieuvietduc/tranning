@@ -32,7 +32,7 @@ class UserRequest extends FormRequest
         }
         return [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'password' => 'required',
             're_password' => 'same:password'
         ];
@@ -43,6 +43,7 @@ class UserRequest extends FormRequest
             'name.required' => 'họ và tên không được để trống',
             'email.required' => 'email không được để trống',
             'email.email' => 'email không đúng định dạng',
+            'email.unique' => 'email này đã tồn tại',
             'password.required' => 'password không được để trống',
             're_password.same' => '2 mật khẩu phải giống nhau'
         ];

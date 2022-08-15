@@ -16,7 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::select('*')->get();
+
+        $user = User::select('*')->Orderby('name', 'DESC')->paginate(5);
         return view('users.list', [
             'user' => $user
         ]);
@@ -45,6 +46,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'deleted' => now(),
             'remember_token' => $request->_token,
         ])->save();
         return redirect()->route('user.index');
@@ -58,7 +60,6 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -84,9 +85,9 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
-       
+
         $user = User::where('id', $id)->first();
-        
+
         if (!Hash::check($request->re_password, $user->password)) {
             return back()->with('error', 'mật khẩu không đúng');
         }
@@ -102,7 +103,23 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::destroy($id);
+        User::where('id', $id)->delete();
         return back();
+    }
+    public function search(Request $request)
+    {
+        $search = $request->search;
+
+        if (empty($search)) {
+            $user = User::Orderby('name', 'DESC')
+                ->select('*')
+                ->paginate(5);
+        } else {
+            $user = User::Orderby('name', 'DESC')
+                ->select('*')
+                ->where('name', 'LIKE', '%' . $search . '%')
+                ->paginate(5);
+        }
+        return view('users.list', compact('user'));
     }
 }

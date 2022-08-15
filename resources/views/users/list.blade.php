@@ -1,7 +1,13 @@
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-<div class="container">
+<br><br><br>
+    <div class="container">
+
+    <form action="{{ route('search') }}" method="get">
+        <input type="text" name="search"  class="form-control">
+        <button type="submit" class="btn">search</button>
+    </form>
     <a href="{{ route('user.create') }}">Add</a>
     <table class="table table-hover">
         <thead>
@@ -28,5 +34,7 @@
                 </tr>
             @endforeach
         </tbody>
+
     </table>
+    {{ $user->links() }}
 </div>
