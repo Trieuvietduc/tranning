@@ -125,4 +125,9 @@ class UserController extends Controller
         }
         return view('users.list', compact('user'));
     }
+    public function onlyTrashed()
+    {
+        $user =  User::onlyTrashed()->paginate(5);
+        return view('users.list', compact('user'));
+    }
 }
