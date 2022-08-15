@@ -6,9 +6,12 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +20,7 @@ class UserController extends Controller
     public function index()
     {
 
-        $user = User::select('*')->Orderby('name', 'DESC')->paginate(5);
+        $user = User::select('*')->Orderby('name', 'DESC')->where('deleted_at', null)->paginate(5);
         return view('users.list', [
             'user' => $user
         ]);
